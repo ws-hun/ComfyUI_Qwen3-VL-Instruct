@@ -32,16 +32,11 @@ class Qwen3_VQA:
                 "text": ("STRING", {"default": "", "multiline": True}),
                 "model": (
                     [
-                        "Qwen3-VL-4B-Instruct-FP8",
-                        "Qwen3-VL-4B-Thinking-FP8",
-                        "Qwen3-VL-8B-Instruct-FP8",
-                        "Qwen3-VL-8B-Thinking-FP8",
-                        "Qwen3-VL-4B-Instruct",
-                        "Qwen3-VL-4B-Thinking",
-                        "Qwen3-VL-8B-Instruct",
-                        "Qwen3-VL-8B-Thinking",
+                        "Huihui-Qwen3-VL-8B-Instruct-abliterated",
+                        "Huihui-Qwen3-VL-8B-Thinking-abliterated",
+                        "Huihui-Qwen3-VL-4B-Instruct-abliterated",
                     ],
-                    {"default": "Qwen3-VL-4B-Instruct-FP8"},
+                    {"default": "Huihui-Qwen3-VL-8B-Instruct-abliterated"},
                 ),
                 "quantization": (
                     ["none", "4bit", "8bit"],
@@ -107,9 +102,10 @@ class Qwen3_VQA:
     ):
         if seed != -1:
             torch.manual_seed(seed)
-        model_id = f"qwen/{model}"
+        # For Huihui models, use the correct Hugging Face repo ID with "huihui-ai/" prefix
+        model_id = f"huihui-ai/{model}"
         self.model_checkpoint = os.path.join(
-            folder_paths.models_dir, "prompt_generator", os.path.basename(model_id)
+            folder_paths.models_dir, "prompt_generator", model
         )
 
         if not os.path.exists(self.model_checkpoint):
